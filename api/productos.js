@@ -1,24 +1,17 @@
-export default function handler(req, res) {
-  const productos = [
-    {
-      id: '1',
-      nombre: 'Remera Blossom',
-      descripcion: 'Remera de algodón premium con diseño exclusivo.',
-      precio: 4999,
-      imagenUrl: 'https://via.placeholder.com/300x200',
-      categoria: 'indumentaria',
-      promo: true
-    },
-    {
-      id: '2',
-      nombre: 'Tote Bag',
-      descripcion: 'Bolso ecológico reutilizable con diseño artístico.',
-      precio: 2999,
-      imagenUrl: 'https://via.placeholder.com/300x200',
-      categoria: 'accesorios',
-      promo: false
-    }
-  ];
+// api/productos.js
+import { db } from '../lib/firebase';
+import { collection, getDocs } from 'firebase/firestore';
 
-  res.status(200).json(productos);
+export default async function handler(req, res) {
+  try {
+    const snapshot = await getDocs(collection(db, 'productos'));
+    const productos = snapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    }));
+    res.status(200).json(productos);
+  } catch (err) {
+    console.error('Error al obtener productos:', err);
+    res.status(500).json({ error: 'Error al obtener productos' });
+  }
 }
