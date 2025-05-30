@@ -1,5 +1,4 @@
-// api/productos.js
-import { db } from '../lib/firebase';
+import { db } from '../lib/firebase.js';
 import { collection, getDocs } from 'firebase/firestore';
 
 export default async function handler(req, res) {
@@ -11,7 +10,7 @@ export default async function handler(req, res) {
     }));
     res.status(200).json(productos);
   } catch (err) {
-  console.error('🔥 ERROR en /api/productos:', JSON.stringify(err, null, 2));
-  res.status(500).json({ error: 'Error al obtener productos' });
-}
+    console.error('🔥 ERROR en /api/productos:', JSON.stringify(err, null, 2));
+    res.status(500).json({ error: 'Error al obtener productos' });
+  }
 }
