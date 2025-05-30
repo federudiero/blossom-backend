@@ -11,7 +11,7 @@ export default async function handler(req, res) {
     }));
     res.status(200).json(productos);
   } catch (err) {
-    console.error('Error al obtener productos:', err);
-    res.status(500).json({ error: 'Error al obtener productos' });
-  }
+  console.error('🔥 ERROR en /api/productos:', JSON.stringify(err, null, 2));
+  res.status(500).json({ error: 'Error al obtener productos' });
+}
 }
