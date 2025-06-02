@@ -6,7 +6,10 @@ export default async function handler(req, res) {
   const allowedOrigins = [
     'http://localhost:5173',           // desarrollo local (Vite)
     'https://www.mitienda.com',        // dominio final en Hostinger (ajustalo cuando lo tengas)
-    'https://blossom-frontend.vercel.app' // si aún estás usando Vercel para el frontend
+    'https://blossom-frontend.vercel.app',
+    'blossom-frontend-iota.vercel.app'
+    
+ // si aún estás usando Vercel para el frontend
   ];
 
   const origin = req.headers.origin;
