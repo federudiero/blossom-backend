@@ -4,13 +4,11 @@ import { collection, getDocs } from 'firebase/firestore';
 export default async function handler(req, res) {
   // Lista de dominios permitidos
   const allowedOrigins = [
-    'http://localhost:5173',           // desarrollo local (Vite)
-    'https://www.mitienda.com',        // dominio final en Hostinger (ajustalo cuando lo tengas)
-    'https://blossom-frontend.vercel.app',
-    'blossom-frontend-iota.vercel.app'
-    
- // si aún estás usando Vercel para el frontend
-  ];
+  'http://localhost:5173',
+  'https://www.mitienda.com',
+  'https://blossom-frontend.vercel.app',
+  'https://blossom-frontend-iota.vercel.app' // ✅ corregido
+];
 
   const origin = req.headers.origin;
 
