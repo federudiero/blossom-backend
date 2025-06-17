@@ -1,14 +1,13 @@
-import { db } from '../lib/firebase.js';
-import { collection, getDocs } from 'firebase/firestore';
+const { db } = require('../lib/firebase.js');
+const { collection, getDocs } = require('firebase/firestore');
 
-export default async function handler(req, res) {
-  // Lista de dominios permitidos
+module.exports = async function (req, res) {
   const allowedOrigins = [
-  'http://localhost:5173',
-  'https://www.mitienda.com',
-  'https://blossom-frontend.vercel.app',
-  'https://blossom-frontend-iota.vercel.app' // ✅ corregido
-];
+    'http://localhost:5173',
+    'https://www.mitienda.com',
+    'https://blossom-frontend.vercel.app',
+    'https://blossom-frontend-iota.vercel.app'
+  ];
 
   const origin = req.headers.origin;
 
@@ -19,7 +18,6 @@ export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
-  // Para preflight request (CORS OPTION)
   if (req.method === 'OPTIONS') {
     return res.status(200).end();
   }
@@ -35,4 +33,4 @@ export default async function handler(req, res) {
     console.error('🔥 ERROR en /api/productos:', JSON.stringify(err, null, 2));
     res.status(500).json({ error: 'Error al obtener productos' });
   }
-}
+};
