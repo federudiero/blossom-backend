@@ -1,7 +1,7 @@
-const { db } = require('../lib/firebase.js');
-const { collection, getDocs } = require('firebase/firestore');
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from '../../lib/firebase.mjs'; // 👈 archivo separado compatible con módulos ES
 
-module.exports = async function (req, res) {
+export default async function handler(req, res) {
   const allowedOrigins = [
     'http://localhost:5173',
     'https://www.mitienda.com',
@@ -10,12 +10,11 @@ module.exports = async function (req, res) {
   ];
 
   const origin = req.headers.origin;
-
   if (allowedOrigins.includes(origin)) {
     res.setHeader('Access-Control-Allow-Origin', origin);
   }
 
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
   if (req.method === 'OPTIONS') {
@@ -30,7 +29,7 @@ module.exports = async function (req, res) {
     }));
     res.status(200).json(productos);
   } catch (err) {
-    console.error('🔥 ERROR en /api/productos:', JSON.stringify(err, null, 2));
+    console.error('🔥 ERROR en /api/productos:', err);
     res.status(500).json({ error: 'Error al obtener productos' });
   }
-};
+}
