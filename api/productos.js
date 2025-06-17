@@ -1,5 +1,5 @@
 import { collection, getDocs } from 'firebase/firestore';
-import { db } from '../../lib/firebase.mjs'; // 👈 archivo separado compatible con módulos ES
+import { db } from '../lib/firebase.mjs';
 
 export default async function handler(req, res) {
   const allowedOrigins = [
@@ -17,9 +17,7 @@ export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
-  if (req.method === 'OPTIONS') {
-    return res.status(200).end();
-  }
+  if (req.method === 'OPTIONS') return res.status(200).end();
 
   try {
     const snapshot = await getDocs(collection(db, 'productos'));
@@ -29,7 +27,9 @@ export default async function handler(req, res) {
     }));
     res.status(200).json(productos);
   } catch (err) {
-    console.error('🔥 ERROR en /api/productos:', err);
+    console.error('🔥 ERROR al obtener productos:', err.message);
     res.status(500).json({ error: 'Error al obtener productos' });
   }
 }
+
+

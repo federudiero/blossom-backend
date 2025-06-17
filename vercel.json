@@ -1,9 +1,22 @@
 {
-  "version": 2,
   "builds": [
-    { "src": "api/*.js", "use": "@vercel/node" }
+    {
+      "src": "blossom-backend/api/*.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "blossom-frontend/package.json",
+      "use": "@vercel/static-build"
+    }
   ],
   "routes": [
-    { "src": "/api/(.*)", "dest": "/api/$1.js" }
+    {
+      "src": "/api/(.*)",
+      "dest": "blossom-backend/api/$1.js"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "blossom-frontend/dist/$1"
+    }
   ]
 }
